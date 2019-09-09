@@ -15,7 +15,7 @@ module.exports = {
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.ts', '.js', '.ejs'],
+    extensions: ['.ts', '.js', '.ejs']
   },
   plugins: [
     new WebpackShellPlugin({

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../cvFileBrowser/.idea/cvFileBrowser.iml" filepath="$PROJECT_DIR$/../cvFileBrowser/.idea/cvFileBrowser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/express-app-typescript.iml" filepath="$PROJECT_DIR$/.idea/express-app-typescript.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../react/backoffice2/.idea/backoffice2.iml" filepath="$PROJECT_DIR$/../../react/backoffice2/.idea/backoffice2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/iSaveFile.iml" filepath="$PROJECT_DIR$/.idea/iSaveFile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../npm_restapidocu/.idea/restDocu.iml" filepath="$PROJECT_DIR$/../npm_restapidocu/.idea/restDocu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ucc/.idea/ucc.iml" filepath="$PROJECT_DIR$/../ucc/.idea/ucc.iml" />
     </modules>
   </component>
 </project>

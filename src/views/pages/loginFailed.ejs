@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body>
+    <span id="topErrorWrapper"></span>
+    <% include ./loginForm %>
+</body>
+    <% include ../partials/footer %>
+<script>
+    <%console.log(data);%>
+    let errorMsg = '';
+    if ('<%=data%>') {
+        errorMsg = '<%= data%>';
+    }
+    let alertMsgDocument = document.createElement("div");
+    alertMsgDocument.setAttribute("class", "alert alert-danger text-center rounded-0");
+    alertMsgDocument.setAttribute("role", 'alert');
+    alertMsgDocument.innerHTML = errorMsg;
+    let alertMsgWrapper = document.getElementById('topErrorWrapper');
+    alertMsgWrapper.appendChild(alertMsgDocument);
+    setTimeout(() => {
+        alertMsgWrapper.remove();
+        errorMsg = '';
+    }, 3000);
+</script>
+</html>
+
