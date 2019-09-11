@@ -6,3 +6,94 @@
     justify-content: center;
     align-items: center;
 }
+
+.navbarIcon {
+    height: 20px;
+}
+
+.navbarBrand {
+    /*color: #6610f2 !important;*/
+    font-weight: 200;
+}
+
+/* === My drive css ===== */
+.directoryBreadcrumb {
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 45px;
+}
+
+#breadcrumbLink {
+    font-size: 18px;
+    color: #464646;
+}
+#breadcrumbLink:hover {
+    color: #007bff;
+}
+
+.myDrivePageHomeIcon {
+    height: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.myDrivePageDLIcon {
+    height: 15px;
+}
+
+.myDrivePageFolderIcon {
+    height: 15px;
+    margin-left: 10px;
+}
+
+.listHeader {
+    padding: 10px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,.54);
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.fileName {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+    color: rgba(0,0,0,.72);
+}
+
+.fileIcon {
+    height: 22px;
+    margin-right: 18px;
+    margin-left: 10px;
+}
+
+.borderTop {
+    border: 1px solid transparent;
+    border-top: 1px solid #eee;
+}
+
+.borderBottom {
+    border: 1px solid transparent;
+    border-bottom: 1px solid #eee;
+}
+
+.defaultCursor {
+    cursor: default;
+}
+
+.pointerCursor {
+    cursor: pointer;
+}
+
+.dlIcon {
+    height: 18px;
+    cursor: pointer;
+}
+
+#rightCaretIcon {
+    height: 12px;
+    margin-right: 15px;
+    margin-left: 15px;
+}

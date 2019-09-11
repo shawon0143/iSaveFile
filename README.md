@@ -12,6 +12,17 @@
 ```
 git clone
 yarn install
+```
+
+#### Create a .dev file 
+Create a .dev file in the project root folder. Example .env file
+```
+USERNAME=your_login_username	
+PASSWORD=your_login_password
+ROOT_FOLDER= path_to_your_file_root_folder 
+```
+#### Finally Run
+```
 yarn start:dev
 ```
 

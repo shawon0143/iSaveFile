@@ -1,17 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ../partials/head %>
+    <% include ../partials/head.ejs %>
+    <title>My drive</title>
 </head>
 <body>
-    <% include ../partials/header %>
+    <% include ../partials/header.ejs %>
     <div class="container">
-        <div class="row">
-            <h6>User login successful !!</h6>
+        <!--  First row Breadcrumb  -->
+        <div class="row borderBottom">
+            <div class="col">
+                <div class="directoryBreadcrumb" id="breadcrumb" onclick="goHome()">
+                    <img src="/images/home.svg" alt="homeIcon" class="myDrivePageHomeIcon">
+                </div>
+            </div>
         </div>
+        <!-- Second row  list header  -->
+        <div class="row">
+            <div class="col-6">
+                <h6 class="listHeader">Name</h6>
+            </div>
+            <div class="col-2 text-center">
+                <h6 class="listHeader">Size</h6>
+            </div>
+            <div class="col-2 text-center">
+                <h6 class="listHeader">Last Modified</h6>
+            </div>
+            <div class="col-2">
+
+            </div>
+        </div>
+        <!-- Third Row File list go up folder -->
+        <div class="row p-2 borderTop defaultCursor" id="goUpFolder">
+            <div class="col" ondblclick="goBack()">
+                <img src="/images/folder.svg" alt="folder" class="myDrivePageFolderIcon mr-3"> ....
+            </div>
+        </div>
+        <!-- Fourth row and so on to show file list  -->
+        <% for ( let i = 0; i < data.length; i++) { %>
+            <% if (data[i].type === 'folder') { %>
+                <div class="row p-2 borderTop defaultCursor"
+                     id="<%= 'fileRow_' + data[i].name %>"
+                     onclick="fileRowClicked('<%= 'fileRow_' + data[i].name %>')"
+                >
+                    <div class="col-6" ondblclick="folderRowDblClicked('<%= data[i].path %>')">
+                        <img src="/images/folder.svg" alt="folder" class="myDrivePageFolderIcon mr-3">
+                        <span class="fileName"><%= data[i].name %></span>
+                    </div>
+                    <div class="col-2 text-center" ondblclick="folderRowDblClicked('<%= data[i].path %>')">
+                       <small class="fileSize"> - </small>
+                    </div>
+                    <div class="col-2 text-center" ondblclick="folderRowDblClicked('<%= data[i].path %>')">
+                        <small class="fileModifiedOn"> - </small>
+                    </div>
+                    <div class="col-2" ondblclick="folderRowDblClicked('<%= data[i].path %>')">
+
+                    </div>
+                </div>
+            <% } else { %>
+                    <div class="row p-2 borderTop defaultCursor"
+                         id="<%= 'fileRow_' + data[i].name %>"
+                         onclick="fileRowClicked('<%= 'fileRow_' + data[i].name %>')"
+                         onmouseenter="showDownloadBtn('<%= 'DlIcon_' + data[i].name  %>')"
+                         onmouseleave="hideDownloadBtn('<%= 'DlIcon_' + data[i].name  %>')"
+                    >
+                        <div class="col-6">
+                            <img src="/images/file.svg" alt="folder" class="fileIcon">
+                            <span class="fileName"><%= data[i].name %></span>
+                        </div>
+                        <div class="col-2 text-center text-secondary">
+                            <small class="fileSize"><%= data[i].fileSize %></small>
+                        </div>
+                        <div class="col-2 text-center text-secondary">
+                            <small class="fileModifiedOn"><%= data[i].fileLastModified %></small>
+                        </div>
+                        <div class="col-2 text-center" id="<%= 'DlIcon_' + data[i].name %>" style="display: none">
+                            <a href="download/<%= data[i].path %>">
+                                <img src="/images/download.svg" alt="download" class="dlIcon">
+                            </a>
+                        </div>
+                    </div>
+            <% } %>
+        <% } %>
     </div>
 </body>
 
-<%# include ../partials/footer %>
+<% include ../partials/footer.ejs %>
+
+
+<script>
+    <%# console.log(data); %>
+    // ===============================================================================
+    // =========== Check for the homepage to show-hide go back folder ================
+    // ===============================================================================
+    let currentUrl = window.location.href;
+    // console.log(currentUrl);
+    let goUpElement = document.getElementById("goUpFolder");
+    if (currentUrl.includes("my-drive")) {
+        goUpElement.remove();
+    }
+    // ===============================================================================
+    // =========== setup Breadcrumb ==================================================
+    // ===============================================================================
+    let query_string_parameters = (currentUrl.split("?")[1]);
+    if (query_string_parameters) {
+        let x = query_string_parameters.split("=")[1].split("/");
+        let breadcrumb = document.getElementById('breadcrumb');
+        let path = '';
+        for (let i = 0; i < x.length ; i++) {
+            let rightCaret = document.createElement("IMG");
+            rightCaret.setAttribute("src","/images/rightCaret.svg");
+            rightCaret.setAttribute("id","rightCaretIcon");
+            breadcrumb.appendChild(rightCaret);
+            let folderName = document.createElement("a");
+            folderName.setAttribute("id","breadcrumbLink");
+            folderName.innerHTML = x[i];
+            path = path + (i !== 0 ? '/' : '') + x[i];
+            folderName.setAttribute("href","/files?path="+path)
+            breadcrumb.appendChild(folderName);
+        }
+
+    }
+
+    // ===============================================================================
+    // ========= END of breadcrumb setup ==============================================
+    // ===============================================================================
+
+    function fileRowClicked(rowId) {
+        let allFileRows = document.querySelectorAll('[id^="fileRow_"]');
+        for (let i=0; i < allFileRows.length; i++) {
+            if (allFileRows[i] !== document.getElementById(rowId)) {
+                // disable any coloured rows if exist
+                allFileRows[i].style.backgroundColor = '#ffffff';
+                let fileName1 = allFileRows[i].getElementsByClassName("fileName");
+                let fileSize1 = allFileRows[i].getElementsByClassName("fileSize");
+                let fileModifiedOn1 = allFileRows[i].getElementsByClassName("fileModifiedOn");
+                fileName1[0].style.color = 'rgba(0,0,0,.72)';
+                fileSize1[0].style.color = '#6c757d';
+                fileModifiedOn1[0].style.color = '#6c757d';
+            } else {
+                // add background to the one we just clicked
+                allFileRows[i].style.backgroundColor = '#e8f0fe';
+                let fileName = allFileRows[i].getElementsByClassName("fileName");
+                let fileSize = allFileRows[i].getElementsByClassName("fileSize");
+                let fileModifiedOn = allFileRows[i].getElementsByClassName("fileModifiedOn");
+                fileName[0].style.color = '#1967d2';
+                fileSize[0].style.color = '#1967d2';
+                fileModifiedOn[0].style.color = '#1967d2';
+            }
+        }
+    }
+
+    function folderRowDblClicked(folderName) {
+        window.location.href = '/files?path='+folderName;
+    }
+
+    function goBack() {
+        let goUpElement = document.getElementById("goUpFolder");
+        goUpElement.style.backgroundColor = '#e8f0fe';
+        let currentUrl = window.location.href;
+        let query_string_parameters = (currentUrl.split("?")[1]).split("=")[1];
+        if (!query_string_parameters.includes('/')) {
+            window.location.href = "/my-drive";
+        } else {
+            let the_arr = query_string_parameters.split('/');
+            the_arr.pop();
+            window.location.href = "/files?path="+the_arr.join('/');
+        }
+    }
+
+    function goHome() {
+        window.location.href = '/my-drive';
+    }
+
+    function showDownloadBtn(selectedRowIcon) {
+        let allIcons = document.querySelectorAll('[id^="DlIcon_"]');
+        for (let i = 0; i < allIcons.length; i++) {
+            if (allIcons[i] === document.getElementById(selectedRowIcon)) {
+                allIcons[i].style.display = 'block';
+            }
+        }
+    }
+    function hideDownloadBtn(selectedRowIcon) {
+        let allIcons = document.querySelectorAll('[id^="DlIcon_"]');
+        for (let i = 0; i < allIcons.length; i++) {
+            if (allIcons[i] === document.getElementById(selectedRowIcon)) {
+                allIcons[i].style.display = 'none';
+            }
+        }
+    }
+
+
+
+</script>
 
 </html>

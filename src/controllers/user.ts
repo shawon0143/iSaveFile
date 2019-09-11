@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import * as session from 'express-session';
 
 const { validationResult } = require('express-validator');
 const { username, password } = require('../../config');
