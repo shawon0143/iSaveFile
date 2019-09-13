@@ -61,8 +61,8 @@
                 <div class="row p-2 borderTop defaultCursor"
                      id="<%= 'fileRow_' + data[i].name %>"
                      onclick="fileRowClicked('<%= 'fileRow_' + data[i].name %>')"
-                     onmouseenter="showDownloadBtn('<%= 'DlIcon_' + data[i].name  %>', '<%= 'DeleteIcon_' + data[i].name  %>')"
-                     onmouseleave="hideDownloadBtn('<%= 'DlIcon_' + data[i].name  %>', '<%= 'DeleteIcon_' + data[i].name  %>')"
+                     onmouseenter="showDownloadBtn((`<%= 'DlIcon_' + data[i].name  %>`), (`<%= 'DeleteIcon_' + data[i].name  %>`))"
+                     onmouseleave="hideDownloadBtn((`<%= 'DlIcon_' + data[i].name  %>`), (`<%= 'DeleteIcon_' + data[i].name  %>`))"
                 >
                     <div class="col-6">
                         <img src="/images/file.svg" alt="folder" class="fileIcon">
@@ -179,6 +179,7 @@
     }
 
     function showDownloadBtn(selectedDownloadIcon , selectedDeleteIcon) {
+        console.log(selectedDownloadIcon, selectedDeleteIcon);
         let allIcons = document.querySelectorAll('[id^="DlIcon_"]');
         let allDeleteIcons = document.querySelectorAll('[id^="DeleteIcon_"]');
         if (allIcons) {

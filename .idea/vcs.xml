@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../npm_restapidocu" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../ucc" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../react/backoffice2" vcs="Git" />
-  </component>
-</project>
