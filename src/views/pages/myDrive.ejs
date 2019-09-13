@@ -10,8 +10,8 @@
         <!--  First row Breadcrumb  -->
         <div class="row borderBottom">
             <div class="col">
-                <div class="directoryBreadcrumb" id="breadcrumb" onclick="goHome()">
-                    <img src="/images/home.svg" alt="homeIcon" class="myDrivePageHomeIcon">
+                <div class="directoryBreadcrumb" id="breadcrumb">
+                    <img src="/images/home.svg" alt="homeIcon" class="myDrivePageHomeIcon" onclick="goHome()">
                 </div>
             </div>
         </div>
@@ -58,28 +58,33 @@
                     </div>
                 </div>
             <% } else { %>
-                    <div class="row p-2 borderTop defaultCursor"
-                         id="<%= 'fileRow_' + data[i].name %>"
-                         onclick="fileRowClicked('<%= 'fileRow_' + data[i].name %>')"
-                         onmouseenter="showDownloadBtn('<%= 'DlIcon_' + data[i].name  %>')"
-                         onmouseleave="hideDownloadBtn('<%= 'DlIcon_' + data[i].name  %>')"
-                    >
-                        <div class="col-6">
-                            <img src="/images/file.svg" alt="folder" class="fileIcon">
-                            <span class="fileName"><%= data[i].name %></span>
-                        </div>
-                        <div class="col-2 text-center text-secondary">
-                            <small class="fileSize"><%= data[i].fileSize %></small>
-                        </div>
-                        <div class="col-2 text-center text-secondary">
-                            <small class="fileModifiedOn"><%= data[i].fileLastModified %></small>
-                        </div>
-                        <div class="col-2 text-center" id="<%= 'DlIcon_' + data[i].name %>" style="display: none">
-                            <a href="download/<%= data[i].path %>">
-                                <img src="/images/download.svg" alt="download" class="dlIcon">
-                            </a>
-                        </div>
+                <div class="row p-2 borderTop defaultCursor"
+                     id="<%= 'fileRow_' + data[i].name %>"
+                     onclick="fileRowClicked('<%= 'fileRow_' + data[i].name %>')"
+                     onmouseenter="showDownloadBtn('<%= 'DlIcon_' + data[i].name  %>', '<%= 'DeleteIcon_' + data[i].name  %>')"
+                     onmouseleave="hideDownloadBtn('<%= 'DlIcon_' + data[i].name  %>', '<%= 'DeleteIcon_' + data[i].name  %>')"
+                >
+                    <div class="col-6">
+                        <img src="/images/file.svg" alt="folder" class="fileIcon">
+                        <span class="fileName"><%= data[i].name %></span>
                     </div>
+                    <div class="col-2 text-center text-secondary">
+                        <small class="fileSize"><%= data[i].fileSize %></small>
+                    </div>
+                    <div class="col-2 text-center text-secondary">
+                        <small class="fileModifiedOn"><%= data[i].fileLastModified %></small>
+                    </div>
+                    <div class="col-1 text-center" id="<%= 'DlIcon_' + data[i].name %>" style="display: none">
+                        <a href="files/download/<%= data[i].path %>">
+                            <img src="/images/download.svg" alt="download" class="dlIcon">
+                        </a>
+                    </div>
+                    <div class="col-1 text-center" id="<%= 'DeleteIcon_' + data[i].name %>" style="display: none">
+                        <a href="files/delete/<%= data[i].path %>">
+                            <img src="/images/delete.svg" alt="download" class="dlIcon">
+                        </a>
+                    </div>
+                </div>
             <% } %>
         <% } %>
     </div>
@@ -173,19 +178,39 @@
         window.location.href = '/my-drive';
     }
 
-    function showDownloadBtn(selectedRowIcon) {
+    function showDownloadBtn(selectedDownloadIcon , selectedDeleteIcon) {
         let allIcons = document.querySelectorAll('[id^="DlIcon_"]');
-        for (let i = 0; i < allIcons.length; i++) {
-            if (allIcons[i] === document.getElementById(selectedRowIcon)) {
-                allIcons[i].style.display = 'block';
+        let allDeleteIcons = document.querySelectorAll('[id^="DeleteIcon_"]');
+        if (allIcons) {
+            for (let i = 0; i < allIcons.length; i++) {
+                if (allIcons[i] === document.getElementById(selectedDownloadIcon)) {
+                    allIcons[i].style.display = 'block';
+                }
             }
         }
+        if (allDeleteIcons) {
+            for (let j = 0; j < allDeleteIcons.length; j++) {
+                if (allDeleteIcons[j] === document.getElementById(selectedDeleteIcon)) {
+                    allDeleteIcons[j].style.display = 'block';
+                }
+            }
+        }
+
     }
-    function hideDownloadBtn(selectedRowIcon) {
+    function hideDownloadBtn(selectedDownloadIcon, selectedDeleteIcon) {
         let allIcons = document.querySelectorAll('[id^="DlIcon_"]');
+        let allDeleteIcons = document.querySelectorAll('[id^="DeleteIcon_"]');
         for (let i = 0; i < allIcons.length; i++) {
-            if (allIcons[i] === document.getElementById(selectedRowIcon)) {
+            if (allIcons[i] === document.getElementById(selectedDownloadIcon)) {
                 allIcons[i].style.display = 'none';
+            }
+        }
+
+        if (allDeleteIcons) {
+            for (let j = 0; j < allDeleteIcons.length; j++) {
+                if (allDeleteIcons[j] === document.getElementById(selectedDeleteIcon)) {
+                    allDeleteIcons[j].style.display = 'none';
+                }
             }
         }
     }

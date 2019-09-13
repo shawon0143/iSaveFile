@@ -97,3 +97,10 @@
     margin-right: 15px;
     margin-left: 15px;
 }
+
+#imageUploadSnackbox {
+    position: fixed;
+    bottom: 45px;
+    right: 20px;
+    min-width: 300px;
+}

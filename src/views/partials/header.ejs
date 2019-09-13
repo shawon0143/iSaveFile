@@ -7,11 +7,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active mr-3">
-                    <a class="nav-link" href="my-drive"><img src="/images/home.svg" alt="" class="navbarIcon"><span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="#"> <img src="/images/upload.svg" alt="" class="navbarIcon"></a>
+                    <label for="fileUpload" class="file-upload btn btn-light btn-block pointerCursor">
+                        <img src="/images/upload.svg" alt="" class="navbarIcon">
+                        <form enctype="multipart/form-data" method="POST" id="uploadForm">
+                            <input id="fileUpload" type="file" name="myFile" class="d-none" onchange="imageUploadHandler(event)">
+                        </form>
+                    </label>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="logout"><img src="/images/logout.svg" alt="" class="navbarIcon"></a>
@@ -20,3 +22,47 @@
         </div>
     </div>
 </nav>
+
+<div class="fade-in" id="imageUploadSnackbox" style="display: none">
+    <div class="card shadow">
+        <div class="card-body text-center" id="cardBody">
+            <h5 class="card-title">File upload</h5>
+            <small class="card-text my-3 d-block" id="snackBoxFileName">File Name</small>
+            <a class="card-link text-secondary pointerCursor mr-4" onclick="cancelUpload()">Cancel</a>
+            <a class="card-link text-primary pointerCursor" onclick="uploadThisFile()">Save</a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let formAction = '/files/uploadFile/'
+    let url = window.location.href;
+    if (url.includes('?')) {
+        formAction = formAction + '/' +(url.split("?")[1]).split("=")[1];
+    }
+    let myForm = document.getElementById('uploadForm');
+    myForm.setAttribute("action",formAction);
+
+    function imageUploadHandler(event) {
+        console.log(event.target.files[0]);
+        if (event.target.files[0]) {
+            let snackBox = document.getElementById("imageUploadSnackbox");
+            snackBox.style.display = 'block';
+            let fileName = document.getElementById("snackBoxFileName");
+            fileName.innerHTML = event.target.files[0].name;
+
+        }
+    }
+
+    function uploadThisFile() {
+        let form = document.getElementById("uploadForm");
+        form.submit();
+    }
+
+    function cancelUpload() {
+        let snackBox = document.getElementById("imageUploadSnackbox");
+        snackBox.style.display = 'none';
+    }
+
+</script>
