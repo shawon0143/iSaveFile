@@ -110,8 +110,13 @@ export const deleteFile = (req: Request, res: Response) => {
     let path = req.params.path;
     let file = __dirname + rootDirectory + "/" + path;
     console.log(path);
-    fs.unlink(file, function() {
-        console.log('file deleted');
-        res.redirect("back"); // reloads the current url again to reflect the changes.
-    })
+    try {
+        fs.unlink(file, function() {
+            console.log('file deleted');
+            res.redirect("back"); // reloads the current url again to reflect the changes.
+        });
+    } catch (e) {
+        console.log(e);
+    }
+
 };
