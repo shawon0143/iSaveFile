@@ -1,7 +1,5 @@
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 30%;
-    left: 35%;
     font-size: 12px;
+    align-items: center;
+    margin-top: 25px;
 }

@@ -1,3 +1,6 @@
+body {
+    background: #f5f5f5;
+}
 .unauthorisedWrapper {
     display: flex;
     flex-direction: column;
@@ -14,6 +17,12 @@
 .navbarBrand {
     /*color: #6610f2 !important;*/
     font-weight: 200;
+}
+
+.myDriveContainer {
+    min-height: 80vh;
+    border: 1px solid #eeeeee;
+    background: #ffffff;
 }
 
 /* === My drive css ===== */
@@ -61,6 +70,9 @@
     font-weight: 400;
     margin: 0;
     color: rgba(0,0,0,.72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fileIcon {

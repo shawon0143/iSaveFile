@@ -13,10 +13,10 @@ let storage = multer.diskStorage({
         }
         cb(null, x);
     },
-    filename: function(req, file, cb) {
+    filename: function(req: any, file, cb) {
         // handle file name collusion
         let currentDir = rootDirectory;
-        let query = req.query.path || "";
+        let query = req.params.path || "";
         if (query) currentDir = path.join(rootDirectory, query);
         const files = fs.readdirSync(currentDir, "utf8");
         let fileName = file.originalname;
@@ -109,7 +109,6 @@ export const uploadFile = (req: any, res: Response, next) => {
 export const deleteFile = (req: Request, res: Response) => {
     let path = req.params.path;
     let file = __dirname + rootDirectory + "/" + path;
-    console.log(path);
     try {
         fs.unlink(file, function() {
             console.log('file deleted');
