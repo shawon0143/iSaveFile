@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
+  "author": "Mohammad Nizam Uddin",
   "scripts": {
     "build": "webpack",
     "start:dev": "NODE_ENV=development webpack",

@@ -23,7 +23,12 @@ let storage = multer.diskStorage({
         for (let x of files) {
             if (x === fileName) {
                 const extension = path.extname(x);
-                fileName = fileName.split(extension)[0] + "(" + Date.now() + ")" + extension;
+                fileName =
+                    fileName.split(extension)[0] +
+                    "(" +
+                    Date.now() +
+                    ")" +
+                    extension;
             }
         }
         cb(null, fileName);
@@ -78,13 +83,23 @@ const formatFileSize = (size: number) => {
 };
 
 const formatDate = (d: Date) => {
-    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ];
     let year = `${d.getFullYear()}`,
         month = months[d.getMonth()],
         date = d.getDate() > 9 ? d.getDate() : "0" + d.getDate();
-    // hours = (d.getHours()),
-    // minutes = (d.getMinutes() > 9) ? d.getMinutes() : '0' + d.getMinutes();
     return `${date} ${month} ${year}`;
 };
 
@@ -111,11 +126,10 @@ export const deleteFile = (req: Request, res: Response) => {
     let file = __dirname + rootDirectory + "/" + path;
     try {
         fs.unlink(file, function() {
-            console.log('file deleted');
+            console.log("file deleted");
             res.redirect("back"); // reloads the current url again to reflect the changes.
         });
     } catch (e) {
         console.log(e);
     }
-
 };

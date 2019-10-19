@@ -1,24 +1,24 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-const { validationResult } = require('express-validator');
-const { username, password } = require('../../config');
-
+const { validationResult } = require("express-validator");
+const { username, password } = require("../../config");
 
 export function authUser(req: any, res: Response) {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log('there is error');
-        res.render('pages/index.ejs', {Error: 'Please enter data.'})
+        console.log("there is error");
+        res.render("pages/index.ejs", { Error: "Please enter data." });
     } else {
-        const name  = req.body.username;
+        const name = req.body.username;
         const pass = req.body.password;
         if (name === username && pass === password) {
             req.session.user = name;
             req.session.admin = true;
-            res.redirect('/my-drive');
+            res.redirect("/my-drive");
         } else {
-            res.render('pages/loginFailed.ejs', {data: 'Invalid credentials'});
+            res.render("pages/loginFailed.ejs", {
+                data: "Invalid credentials"
+            });
         }
     }
 
@@ -33,5 +33,4 @@ export function authCheck(req, res, next) {
         // return res.sendStatus(401);
         return res.render("pages/unauthorised.ejs");
     }
-};
-
+}
